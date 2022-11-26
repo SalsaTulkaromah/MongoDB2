@@ -1,0 +1,21 @@
+<?php 
+
+$manager = new MongoDB\Driver\Manager("mongodb+srv://salsatulkaromah:mongo@cluster0.07hpied.mongodb.net/?retryWrites=true&w=majority");
+
+$bulk = new MongoDB\Driver\BulkWrite;
+$bulk->insert(['borough' => 'amik', 'name' => 'amik', 'restaurant_id' => 'amik']);
+// $bulk->insert(['borough' => 'b', 'name' => 'b', 'restaurant_id' => 'b']);
+// $bulk->insert(['borough' => 'c', 'name' => 'c', 'restaurant_id' => 'c']);
+$manager->executeBulkWrite('sample_restaurants.restaurants', $bulk);
+
+
+//Query Class
+$query = new MongoDB\Driver\Query(array('restaurant_id' => 'amik'));
+
+//Pilih DB dan Collection
+$cursor = $manager->executeQuery('sample_restaurants.restaurants', $query);
+
+//Convert cursor to Array and print result 
+echo "<pre>";
+print_r($cursor->toArray());
+echo "</pre>";
